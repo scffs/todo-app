@@ -1,8 +1,13 @@
 import React from 'react';
+import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-test('App render', () => {
-  render(<div>rendered</div>);
+import App from '../App';
 
-  expect(screen.getByText('rendered'));
+describe('App', () => {
+  it('should render the app with the correct text', () => {
+    render(<App />);
+
+    expect(screen.getByText('Made with love by'));
+  });
 });
