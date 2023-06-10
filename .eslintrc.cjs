@@ -22,6 +22,7 @@ module.exports = {
     indent: 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.{ts,tsx,js,jsx}'] }],
     'max-len': ['warn', { code: 120 }],
+    'jsx-quotes': [2, 'prefer-single'],
   },
   overrides: [
     {
@@ -35,10 +36,12 @@ module.exports = {
       files: ['*.tsx'],
       rules: {
         quotes: ['error', 'single'],
-        'react/function-component-definition': [2, {
-          namedComponents: 'arrow-function',
-          unnamedComponents: 'arrow-function',
-        },
+        'react/function-component-definition': [
+          2,
+          {
+            namedComponents: 'arrow-function',
+            unnamedComponents: 'arrow-function',
+          },
         ],
       },
       parserOptions: {
