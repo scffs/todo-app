@@ -1,5 +1,5 @@
 # ToDo App
-
+[![Tests](https://github.com/scffs/todo-app/actions/workflows/tests.yml/badge.svg)](https://github.com/ваш-логин/ваш-репозиторий/actions/workflows/tests.yml)
 # Installation & run
 
 `npm i && npm run start`
