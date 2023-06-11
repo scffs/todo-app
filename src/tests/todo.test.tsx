@@ -31,7 +31,7 @@ describe('Todo App', () => {
     fireEvent.click(addButton);
 
     setTimeout(() => {
-      const tasks = screen.getAllByText('Todo');
+      const tasks = screen.getAllByText(/Todo/);
       expect(tasks).toHaveLength(2);
     }, 500);
   });
