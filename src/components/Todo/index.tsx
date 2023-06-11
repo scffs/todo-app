@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useState } from 'react';
 import {
-  Alert, Box, Button, ButtonGroup, TextField,
+  Alert, Box, Button, ButtonGroup, TextField, useMediaQuery, useTheme,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -19,6 +19,9 @@ type TaskFilter = 'all' | 'active' | 'completed';
 const filters: TaskFilter[] = ['all', 'active', 'completed'];
 
 const Todo = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(650));
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
   const [taskFilter, setTaskFilter] = useState<TaskFilter>('all');
@@ -94,13 +97,22 @@ const Todo = () => {
           <TaskList tasks={filteredTasks} onToggle={handleToggleTask} />
         </Suspense>
       </Box>
-      <Box mt={4} display='flex' justifyContent='space-between' alignItems='center'>
-        <Button variant='contained'>
+      <Box
+        mt={4}
+        display='flex'
+        justifyContent='space-between'
+        alignItems='center'
+        sx={{
+          flexDirection: isSmallScreen ? 'column' : 'row',
+          gap: isSmallScreen ? '30px' : '0',
+        }}
+      >
+        <Button variant='outlined' fullWidth={isSmallScreen}>
           {remainingTasks}
           {' '}
           tasks left
         </Button>
-        <ButtonGroup>
+        <ButtonGroup fullWidth={isSmallScreen}>
           {filters.map((filter) => (
             <Button
               key={filter}
@@ -111,7 +123,7 @@ const Todo = () => {
             </Button>
           ))}
         </ButtonGroup>
-        <Button variant='outlined' onClick={handleClearCompleted} startIcon={<DeleteIcon />}>
+        <Button variant='outlined' onClick={handleClearCompleted} fullWidth={isSmallScreen} startIcon={<DeleteIcon />}>
           Clear Completed
         </Button>
       </Box>
