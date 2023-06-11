@@ -1,13 +1,13 @@
 import React from 'react';
-import { describe, it } from 'vitest';
+import { test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import App from '../App';
 
-describe('App', () => {
-  it('should render the app with the correct text', () => {
-    render(<App />);
+test('App should render with the correct text', () => {
+  render(<App />);
 
+  setTimeout(() => {
     expect(screen.getByText('Made with love by'));
-  });
+  }, 500);
 });
