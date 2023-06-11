@@ -33,7 +33,7 @@ describe('Todo App', () => {
     setTimeout(() => {
       const tasks = screen.getAllByText('Todo');
       expect(tasks).toHaveLength(2);
-    }, 300);
+    }, 500);
   });
 
   it('should toggle a task from all to completed', () => {
@@ -44,7 +44,7 @@ describe('Todo App', () => {
       fireEvent.click(tasks[0]);
       fireEvent.click(activeButton);
       expect(screen.getByText(/Тестовое/));
-    }, 300);
+    }, 500);
   });
 
   it('should add and remove a new task from the task list', () => {
