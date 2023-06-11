@@ -1,16 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, lazy, Suspense } from 'react';
 import { List } from '@mui/material';
-
-import Task from '../Task';
 
 import { TaskListProps } from './TaskListProps';
 
 import s from './TaskList.module.css';
 
+import Loader from '../Loader';
+
+const Task = lazy(() => import('../Task'));
+
 const TaskList: FC<TaskListProps> = ({ tasks, onToggle }) => (
   <List className={s.taskList}>
     {tasks.map(({ id, completed, task }) => (
-      <Task key={id} task={task} completed={completed} onToggle={() => onToggle(id)} />
+      <Suspense key={id} fallback={<Loader />}>
+        <Task task={task} completed={completed} onToggle={() => onToggle(id)} />
+      </Suspense>
     ))}
   </List>
 );

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import {
   Alert, Box, Button, ButtonGroup, TextField,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import TaskList from '../TaskList';
+import Loader from '../Loader';
+
+const TaskList = lazy(() => import('../TaskList'));
 
 interface Task {
   id: number;
@@ -88,7 +90,9 @@ const Todo = () => {
       </Button>
       {error && <Alert sx={{ mt: 2 }} severity='error'>{error}</Alert>}
       <Box mt={4}>
-        <TaskList tasks={filteredTasks} onToggle={handleToggleTask} />
+        <Suspense fallback={<Loader />}>
+          <TaskList tasks={filteredTasks} onToggle={handleToggleTask} />
+        </Suspense>
       </Box>
       <Box mt={4} display='flex' justifyContent='space-between' alignItems='center'>
         <Button variant='contained'>
