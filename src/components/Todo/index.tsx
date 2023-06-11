@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Alert, Box, Button, ButtonGroup, TextField,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import TaskList from '../TaskList';
 
@@ -86,11 +87,11 @@ const Todo = () => {
         <TaskList tasks={filteredTasks} onToggle={handleToggleTask} />
       </Box>
       <Box mt={4} display='flex' justifyContent='space-between' alignItems='center'>
-        <Box>
+        <Button variant='contained'>
           {remainingTasks}
           {' '}
           tasks left
-        </Box>
+        </Button>
         <ButtonGroup>
           {['all', 'active', 'completed'].map((filter) => (
             <Button
@@ -102,7 +103,7 @@ const Todo = () => {
             </Button>
           ))}
         </ButtonGroup>
-        <Button variant='outlined' onClick={handleClearCompleted}>
+        <Button variant='outlined' onClick={handleClearCompleted} startIcon={<DeleteIcon />}>
           Clear Completed
         </Button>
       </Box>
