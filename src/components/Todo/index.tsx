@@ -20,22 +20,22 @@ const filters: TaskFilter[] = ['all', 'active', 'completed'];
 
 const tasksList: Task[] = [
   {
-    id: 1,
+    id: 0,
     task: 'Тестовое задание',
     completed: false,
   },
   {
-    id: 2,
+    id: 1,
     task: 'Прекрасный код',
     completed: true,
   },
   {
-    id: 3,
+    id: 2,
     task: 'Покрытие тестами',
     completed: true,
   },
   {
-    id: 4,
+    id: 3,
     task: 'Готовность к работе',
     completed: true,
   },
@@ -49,7 +49,7 @@ const Todo = () => {
   const [newTask, setNewTask] = useState('');
   const [taskFilter, setTaskFilter] = useState<TaskFilter>('all');
   const [error, setError] = useState<string>('');
-  const [idCounter, setIdCounter] = useState<number>(0);
+  const [idCounter, setIdCounter] = useState<number>(tasksList.findLastIndex((task) => task.id) + 1);
 
   const handleAddTask = () => {
     if (newTask.trim() !== '') {
