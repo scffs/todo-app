@@ -18,11 +18,34 @@ type TaskFilter = 'all' | 'active' | 'completed';
 
 const filters: TaskFilter[] = ['all', 'active', 'completed'];
 
+const tasksList: Task[] = [
+  {
+    id: 1,
+    task: 'Тестовое задание',
+    completed: false,
+  },
+  {
+    id: 2,
+    task: 'Прекрасный код',
+    completed: true,
+  },
+  {
+    id: 3,
+    task: 'Покрытие тестами',
+    completed: true,
+  },
+  {
+    id: 4,
+    task: 'Готовность к работе',
+    completed: true,
+  },
+];
+
 const Todo = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(650));
 
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(tasksList);
   const [newTask, setNewTask] = useState('');
   const [taskFilter, setTaskFilter] = useState<TaskFilter>('all');
   const [error, setError] = useState<string>('');
