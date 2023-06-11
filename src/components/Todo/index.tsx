@@ -12,10 +12,14 @@ interface Task {
   completed: boolean;
 }
 
+type TaskFilter = 'all' | 'active' | 'completed';
+
+const filters: TaskFilter[] = ['all', 'active', 'completed'];
+
 const Todo = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
-  const [taskFilter, setTaskFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [taskFilter, setTaskFilter] = useState<TaskFilter>('all');
   const [error, setError] = useState<string>('');
   const [idCounter, setIdCounter] = useState<number>(0);
 
@@ -93,11 +97,11 @@ const Todo = () => {
           tasks left
         </Button>
         <ButtonGroup>
-          {['all', 'active', 'completed'].map((filter) => (
+          {filters.map((filter) => (
             <Button
               key={filter}
               variant={taskFilter === filter ? 'contained' : 'outlined'}
-              onClick={() => setTaskFilter(filter as 'all' | 'active' | 'completed')}
+              onClick={() => setTaskFilter(filter)}
             >
               {filter}
             </Button>
