@@ -1,4 +1,4 @@
-export interface TaskProps {
+export interface Interfaces {
   task: string;
   completed: boolean;
   onToggle: () => void;

@@ -4,7 +4,7 @@ interface Task {
   completed: boolean;
 }
 
-export interface TaskListProps {
+export interface Interfaces {
   tasks: Task[];
   onToggle: (id: number) => void;
 }
