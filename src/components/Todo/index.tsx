@@ -1,5 +1,5 @@
 import React, {
-  lazy, Suspense, useState, useCallback, useMemo
+  lazy, Suspense, useState, useCallback, useMemo,
 } from 'react';
 import {
   Alert,

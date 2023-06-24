@@ -1,4 +1,6 @@
-import React, { FC, lazy, Suspense } from 'react';
+import React, {
+  FC, lazy, Suspense, memo,
+} from 'react';
 import { List } from '@mui/material';
 
 import { TaskListProps } from './TaskListProps';
@@ -19,4 +21,4 @@ const TaskList: FC<TaskListProps> = ({ tasks, onToggle }) => (
   </List>
 );
 
-export default TaskList;
+export default memo(TaskList);
