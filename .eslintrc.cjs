@@ -23,6 +23,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.{ts,tsx,js,jsx}'] }],
     'max-len': ['warn', { code: 120 }],
     'jsx-quotes': [2, 'prefer-single'],
+    'import/prefer-default-export': 'off',
   },
   overrides: [
     {

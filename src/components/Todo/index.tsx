@@ -6,40 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import Loader from '../Loader';
 
+import { tasksList } from './data';
+
+import { TaskFilter, Task } from './interfaces';
+
 const TaskList = lazy(() => import('../TaskList'));
 
-interface Task {
-  id: number;
-  task: string;
-  completed: boolean;
-}
-
-type TaskFilter = 'all' | 'active' | 'completed';
-
 const filters: TaskFilter[] = ['all', 'active', 'completed'];
-
-const tasksList: Task[] = [
-  {
-    id: 0,
-    task: 'Тестовое задание',
-    completed: false,
-  },
-  {
-    id: 1,
-    task: 'Прекрасный код',
-    completed: true,
-  },
-  {
-    id: 2,
-    task: 'Покрытие тестами',
-    completed: true,
-  },
-  {
-    id: 3,
-    task: 'Готовность к работе',
-    completed: true,
-  },
-];
 
 const Todo = () => {
   const theme = useTheme();
