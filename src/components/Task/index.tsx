@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import {
   Checkbox, ListItem, ListItemButton, ListItemIcon, ListItemText,
 } from '@mui/material';
@@ -16,4 +16,4 @@ const Task: FC<TaskProps> = ({ task, completed, onToggle }) => (
   </ListItem>
 );
 
-export default Task;
+export default memo(Task);

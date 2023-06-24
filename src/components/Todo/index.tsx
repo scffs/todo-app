@@ -1,6 +1,14 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, {
+  lazy, Suspense, useState, useCallback, useMemo
+} from 'react';
 import {
-  Alert, Box, Button, ButtonGroup, TextField, useMediaQuery, useTheme,
+  Alert,
+  Box,
+  Button,
+  ButtonGroup,
+  TextField,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -22,9 +30,11 @@ const Todo = () => {
   const [newTask, setNewTask] = useState('');
   const [taskFilter, setTaskFilter] = useState<TaskFilter>('all');
   const [error, setError] = useState<string>('');
-  const [idCounter, setIdCounter] = useState<number>(tasksList.findLastIndex((task) => task.id) + 1);
+  const [idCounter, setIdCounter] = useState<number>(
+    tasksList.findLastIndex((task) => task.id) + 1,
+  );
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     if (newTask.trim() !== '') {
       const newTaskItem: Task = {
         id: idCounter,
@@ -32,47 +42,52 @@ const Todo = () => {
         completed: false,
       };
 
-      setTasks([...tasks, newTaskItem]);
+      setTasks((prevTasks) => [...prevTasks, newTaskItem]);
       setNewTask('');
       setError('');
-      setIdCounter(idCounter + 1);
+      setIdCounter((prevIdCounter) => prevIdCounter + 1);
     } else {
       setError('There is no task text');
     }
-  };
+  }, [newTask, idCounter]);
 
-  const handleToggleTask = (id: number) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
+  const handleToggleTask = useCallback(
+    (id: number) => {
+      setTasks((prevTasks) => prevTasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed: !task.completed };
+        }
+        return task;
+      }));
+    },
+    [],
+  );
 
-    setTasks(updatedTasks);
-  };
+  const handleTaskInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNewTask(e.target.value);
+      setError('');
+    },
+    [],
+  );
 
-  const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(e.target.value);
-    setError('');
-  };
+  const filteredTasks = useMemo(() => {
+    if (taskFilter === 'active') {
+      return tasks.filter((task) => !task.completed);
+    } if (taskFilter === 'completed') {
+      return tasks.filter((task) => task.completed);
+    }
+    return tasks;
+  }, [tasks, taskFilter]);
 
-  const completedTasks = tasks.filter((task) => task.completed);
-  const activeTasks = tasks.filter((task) => !task.completed);
+  const remainingTasks = useMemo(
+    () => tasks.filter((task) => !task.completed).length,
+    [tasks],
+  );
 
-  let filteredTasks: Task[] = tasks;
-  if (taskFilter === 'active') {
-    filteredTasks = activeTasks;
-  } else if (taskFilter === 'completed') {
-    filteredTasks = completedTasks;
-  }
-
-  const remainingTasks = activeTasks.length;
-
-  const handleClearCompleted = () => {
-    const updatedTasks = tasks.filter((task) => !task.completed);
-    setTasks(updatedTasks);
-  };
+  const handleClearCompleted = useCallback(() => {
+    setTasks((prevTasks) => prevTasks.filter((task) => !task.completed));
+  }, []);
 
   return (
     <Box>
@@ -87,7 +102,11 @@ const Todo = () => {
       <Button variant='contained' onClick={handleAddTask}>
         Add Task
       </Button>
-      {error && <Alert sx={{ mt: 2 }} severity='error'>{error}</Alert>}
+      {error && (
+        <Alert sx={{ mt: 2 }} severity='error'>
+          {error}
+        </Alert>
+      )}
       <Box mt={4}>
         <Suspense fallback={<Loader />}>
           <TaskList tasks={filteredTasks} onToggle={handleToggleTask} />
@@ -119,7 +138,12 @@ const Todo = () => {
             </Button>
           ))}
         </ButtonGroup>
-        <Button variant='outlined' onClick={handleClearCompleted} fullWidth={isSmallScreen} startIcon={<DeleteIcon />}>
+        <Button
+          variant='outlined'
+          onClick={handleClearCompleted}
+          fullWidth={isSmallScreen}
+          startIcon={<DeleteIcon />}
+        >
           Clear Completed
         </Button>
       </Box>
